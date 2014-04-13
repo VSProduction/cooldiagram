@@ -1,0 +1,446 @@
+<html> 
+
+<head> 
+<style> 
+input::-webkit-input-placeholder {color:#444;}
+input::-moz-placeholder {color:#444;}
+
+
+input:focus {
+	border: 1px solid #0FF; 
+	font-size: 20px;
+	box-shadow: inset 2px 3px 0px 0px rgba(0,0,0, 0.3); 
+}
+
+input {
+	font-size: 16px; 
+	
+	height: 6%;
+	width: 18%;
+	border: 1px solid black;
+	box-shadow: inset 0px 2px 0px 0px rgba(0,0,0, 0.1); 
+	box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.3); 
+}
+#x {
+	
+	position: absolute; 
+	top: 40%;
+	
+	left: 55%; 
+	
+}
+#y {
+	
+	position: absolute; 
+	top: 40%;
+	left: 75%;
+	
+}
+#zoom {
+	
+	position: absolute; 
+	top: 30%;
+	left: 55%;
+		
+}
+#input {
+	position: absolute ;
+	top: 30%;
+	left:75%; 
+
+}
+
+#buttons {
+	
+	position: absolute; 
+	left: 40%;
+	
+	
+}
+
+p {
+	
+	position: absolute; 
+	top: 8%;
+	width: 50%;
+	left: 45%;
+	
+}
+</style>
+ <meta name="robots" content="index, follow" />
+  <meta name="keywords" content="Построение графиков онлайн, Функция онлайн, Построить функцию онлайн, Построение функции, Графики онлайн" />
+</head>
+
+
+<body> 
+<p> 
+Мануал по использованию: 
+В поле вводим функцию по типу: y=kx+b; 
+k и  b - произвольные числа! 
+Кнопка загрузить - сохраняет график на Ваш компьютер! 
+Единовременно на одном полотне можно построить любое количество графиков. 
+В поле масштаб, надо вводить шаг! То есть на сколько пунктов будет изменяться значение на графике...
+</p> 
+<div id="buttons"> 
+<button onclick = "download()"> ЗАГРУЗИТЬ!!!! </button>
+<button onclick = "Clear()"> Очистить!!!! </button>
+<button onclick = "Go()"> Go!!!! </button>
+</div>
+
+<input id="input" placeholder="y=k*x+b (Сюда  функцию!)"> 
+
+<input id="zoom" placeholder="Масштаб" > 
+
+<canvas> 
+
+
+</canvas>
+<input id="X" placeholder="Как назвать Х"> 
+<input id="Y" placeholder="Как назвать У"> 
+<!-- Yandex.Metrika informer -->
+<a href="http://metrika.yandex.ru/stat/?id=23742313&amp;from=informer"
+target="_blank" rel="nofollow"><img src="//bs.yandex.ru/informer/23742313/3_1_FFFFFFFF_EFEFEFFF_0_pageviews"
+style="width:88px; height:31px; border:0;" alt="Яндекс.Метрика" title="Яндекс.Метрика: данные за сегодня (просмотры, визиты и уникальные посетители)" onclick="try{Ya.Metrika.informer({i:this,id:23742313,lang:'ru'});return false}catch(e){}"/></a>
+<!-- /Yandex.Metrika informer -->
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+(function (d, w, c) {
+    (w[c] = w[c] || []).push(function() {
+        try {
+            w.yaCounter23742313 = new Ya.Metrika({id:23742313,
+                    webvisor:true,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true});
+        } catch(e) { }
+    });
+
+    var n = d.getElementsByTagName("script")[0],
+        s = d.createElement("script"),
+        f = function () { n.parentNode.insertBefore(s, n); };
+    s.type = "text/javascript";
+    s.async = true;
+    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+    if (w.opera == "[object Opera]") {
+        d.addEventListener("DOMContentLoaded", f, false);
+    } else { f(); }
+})(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="//mc.yandex.ru/watch/23742313" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+<script type="text/javascript">
+(function (d, w, c) {
+    (w[c] = w[c] || []).push(function() {
+        try {
+            w.yaCounter23729827 = new Ya.Metrika({id:23729827,
+                    webvisor:true,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true});
+        } catch(e) { }
+    });
+
+    var n = d.getElementsByTagName("script")[0],
+        s = d.createElement("script"),
+        f = function () { n.parentNode.insertBefore(s, n); };
+    s.type = "text/javascript";
+    s.async = true;
+    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+    if (w.opera == "[object Opera]") {
+        d.addEventListener("DOMContentLoaded", f, false);
+    } else { f(); }
+})(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="//mc.yandex.ru/watch/23729827" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+</body> 
+
+</html>
+<script> 
+var zoom = document.getElementById('zoom'); 
+var canvas = document.getElementsByTagName('canvas')[0]; 
+var ctx = canvas.getContext('2d'); 
+var bg = new Image(); 
+var inputA = document.getElementById('input'); 
+var inputX = document.getElementById('X'); 
+var inputY = document.getElementById('Y'); 
+bg.src = 'bg.png'; 
+
+canvas.width = 400; 
+canvas.height = 400; 
+
+function onl() {
+	bg.addEventListener('load', function() {
+		ctx.drawImage(bg,0,0, canvas.width, canvas.height); 
+		
+	})
+	
+}
+onl();
+
+
+
+
+
+
+
+function GetParams(str) {
+	
+this.str = str; 
+this.xPos = this.str.indexOf('x'); 
+
+var reg = /y/i;
+!(this.y==undefined) ?  this.action = this.str.replace(reg, this.y): this.action = this.str.replace(reg, ""); 
+ reg = /x/i; 
+!(this.x==undefined) ? this.action = this.action.replace(reg, this.x): this.action = this.action.replace(reg, "x"); 
+
+
+}
+
+
+GetParams.prototype.operation = function(x) {
+this.again = this.action; 
+	this.x = x; 
+	
+this.action = this.action.replace(/\s+/g, "").slice(1);//delete the splaces
+
+var reg = /([-+*\/])/g; 
+this.action = this.action.replace(reg,"...$1...");
+this.array = this.action.split('...'); 
+  
+
+this.array[searchA(this.array, 'x')] = this.x; 
+
+
+
+
+
+
+while(this.array.length!=1) {
+	this.bust("*", Mult); 
+this.bust("/", divide); 
+
+this.bust("-", Diff); 
+this.bust("+", Summ); 
+
+
+}
+this.action = this.again; 
+return this.array; 
+
+}
+
+GetParams.prototype.bust = function(str, func) {
+	
+		for(i=0;i<this.array.length; i++) {
+		
+		if(this.array[i]==str) {
+			this.array[i-1] = func(this.array[i-1], this.array[i+1]); 
+			this.array.splice(i,2);
+			
+		}
+	
+		
+	}
+}
+
+GetParams.prototype.COMPLETE = function() {
+	
+var w = /[a-zA-Z]/g; 
+this.letter = this.str.match(w);
+
+	
+	return this; 
+}
+
+	
+
+function download() {
+
+
+xmlReq(); 
+xmlReqSave();
+	
+	
+}
+
+function xmlReq() {
+	window.tz = canvas.toDataURL(); 
+	var xml = new XMLHttpRequest(); 
+	var b = 'a='+window.tz; 
+
+	xml.open("POST", "save.php", false); 
+	xml.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+
+	xml.onreadystatechange = function() {
+		
+		if(xml.readyState==4) {
+	window.path = xml.responseText; 
+		
+			
+		}
+	}
+	
+	
+	xml.send(b); 
+}
+
+
+function xmlReqSave() {
+	
+	location = 'modify.php?path='+window.path;
+
+	
+}
+
+
+
+
+function Clear() {
+	
+
+
+location = "index.html";
+	
+	
+
+	
+	
+}
+function Summ(a,b) {
+	
+	return +a+ +b; 
+	
+	
+}
+function Diff(a,b) {
+	return +a-b; 
+}
+function Mult(a,b) {
+	return a*b; 
+}
+function divide(a,b) {
+	return a/b; 
+}
+function bust(str,func) {
+	
+		for(dk=0;dk<this.array.length; dk++) {
+			if(this.array[dk]==str) {
+				this.array[dk-1] = func(this.array[dk-1], this.array[dk+1]); 
+				this.array.splice(dk,2); 
+				
+				
+			}
+			
+			
+		}
+	
+}
+function searchA(array, str) {
+	for(kk=0; kk<array.length; kk++) {
+		if(array[kk]==str) return kk; 
+		
+	}
+	
+	
+}
+window.check =0; 
+function Go() {
+	
+	if(inputX.value=="") inputX.value = 'X'; 
+	if(inputY.value=="") inputY.value = 'Y'; 
+	RZ = +zoom.value; 
+	if(RZ==0) RZ = 1; 
+
+	if(inputA.value==""||inputA.value.indexOf('y')==-1) {alert('Введите верное значение!'); return false; } 
+	window.string =  inputA.value; 
+	
+
+var dex = new GetParams(window.string);
+
+
+
+//////// Begin of building graphics
+	ctx.beginPath(); 
+
+
+
+mX =0; //построение точек и начальное ее значение
+Ox = canvas.width/2; 
+Oy = canvas.height/2 -10; 
+
+for(kkk=0; kkk<10; kkk++) {
+	ctx.arc(Ox + +mX, Oy - +dex.operation(mX), 1, 0, Math.PI*2, true); 
+	ctx.moveTo(Ox + +mX, Oy - +dex.operation(mX)); 
+	mX+=15;
+
+	ctx.lineTo(Ox + +mX, Oy - +dex.operation(mX));
+	
+}
+
+ctx.stroke();
+
+
+ctx.closePath(); 
+ctx.save(); 
+/////End of building; 
+
+if(window.check==1) {
+	
+	return; 
+	
+} else {
+	
+	//draw the numbers
+
+summA = RZ*5; 
+ctx.beginPath();
+x=0;  
+while(x<canvas.height ) {
+	ctx.fillText(summA, canvas.width/2 -10, x); 
+	ctx.font = "italic bold 10px sans-serif"; 
+	ctx.textAlign = "right";
+	summA-=RZ;
+	
+	x+=40; 
+}
+y=0; 
+summ = -RZ*5; 
+while(y<canvas.width) {
+	
+	if(summ==0) {summ+=RZ; y+=40; continue; }
+	ctx.fillText(summ,  y , canvas.height/2); 
+	
+	summ+=RZ; 
+
+	ctx.font = "italic bold 10px sans-serif"; 
+	ctx.textAlign = "right";
+	y+=40; 
+	
+}//отрисовка цифр
+	
+
+
+ctx.beginPath(); 
+ctx.fillText(inputX.value, canvas.width - 20,  canvas.height/2 - 15); 
+ctx.translate(canvas.width/2+5,40); 
+ctx.restore(); //чтобы не появлялась отраженная прямая
+
+ctx.rotate(Math.PI/2); 
+ctx.textAlign = "left"; 
+
+ctx.fillText(inputY.value, 30, -210); 
+ctx.closePath();
+window.check = 1; 
+ctx.rotate(-Math.PI/2); //Обратно поворачиваем холст, чтобы функции правильно отображались!
+}
+
+
+}
+
+
+</script>
+
